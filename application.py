@@ -38,9 +38,10 @@ def water_pgres(user, password):
     return connection
 
 
-
-
-header_text = '''<html>\n<head> <title>EB Flask Test</title> </head>\n<body>'''
+colors = {
+    'background': '#111111',
+    'text': '#7FDBFF'
+}
 
 
 
@@ -65,22 +66,30 @@ def serve_layout():
     
     #1800 based on average tested values in 2018
     init_df.gallons=init_df.total_count/1800
-
-
+    total_gallons=round(sum(init_df.gallons))
+  
     
     
     
-# =============================================================================
-#     app.layout = html.Div(children=[
-#         html.H1(children='Beef_Cheese Ranch'),
-#     
-#         html.Div(children='''
-#             Water usage timeline.
-#         '''),
-# =============================================================================
+    timeline_graph = html.Div(style={'backgroundColor': colors['background']}, children=[
+        html.H1(children='Beef-Cheese Ranch', 
+            style={
+            'textAlign': 'left',
+            'color': colors['text']}),
+    
+        html.Div(children=f'Total gallons to date: {total_gallons}',            
+            style={
+            'textAlign': 'left',
+            'color': colors['text']}),
         
-    return dcc.Graph(id='example-graph',figure={'data': [{'x': init_df.record_date, 'y': init_df.gallons, 'type': 'line', 'name': 'Gallons'}],'layout': {'title': 'Gallons by Date'}})
-    #])
+        dcc.Graph(id='example-graph',
+              figure={'data': [{'x': init_df.record_date, 'y': init_df.gallons, 'type': 'line', 'name': 'Gallons'}],
+                      'layout': {'title': 'Gallons by Date'}})
+        
+        ])
+        
+    return timeline_graph
+    
   
 
 
@@ -91,5 +100,5 @@ if __name__ == "__main__":
 
     
     
-    #application.debug = True
+    application.debug = True
     application.run()
