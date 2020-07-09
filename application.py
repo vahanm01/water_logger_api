@@ -60,12 +60,13 @@ def serve_layout():
                                   port = "5432",
                                   database = "raw_logs")
 
-    init_df=water_query_results(f"select* from raw_effect_counts order by record_date asc", connection)
+    init_df=water_query_results(f"select* from pulse_detection order by record_date asc", connection)
     init_df["gallons"]=float(0)
     
     
     #1800 based on average tested values in 2018
-    init_df.gallons=init_df.total_count/1800
+    #new pulse detection is 13.3 pulses per gallon. We double because there are to reed switches at halfway.
+    init_df.gallons=init_df.total_pulses/26.7
     total_gallons=round(sum(init_df.gallons))
   
     
@@ -100,5 +101,5 @@ if __name__ == "__main__":
 
     
     
-    application.debug = True
+    #application.debug = True
     application.run()
