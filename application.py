@@ -46,6 +46,7 @@ colors = {
 
 
 
+
 app = dash.Dash(
     __name__,
     server=application,
@@ -57,11 +58,13 @@ def serve_layout():
 
 
     
+    
     client =  paramiko.client.SSHClient()
     hostname='98.210.69.250'
     port=22
     username='pi'
     password='Felicia2020#'
+    
     
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy()) 
     client.load_system_host_keys()
