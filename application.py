@@ -104,6 +104,7 @@ def serve_layout():
     
     flow_eval='YIP'
     
+    
     timeline_graph = html.Div(style={'backgroundColor': colors['background']}, children=[
         html.H1(children='Beef-Cheese Ranch', 
             style={
