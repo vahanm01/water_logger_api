@@ -67,7 +67,7 @@ def serve_layout():
     
     
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy()) 
-    client.load_system_host_keys()
+    #client.load_system_host_keys()
     print('loaded client')
     client.connect(hostname, port, username, password)
     
