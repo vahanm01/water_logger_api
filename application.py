@@ -58,7 +58,7 @@ def serve_layout():
 
     
     client =  paramiko.client.SSHClient()
-    hostname='10.0.0.6'
+    hostname='98.210.69.250'
     port=22
     username='pi'
     password='Felicia2020#'
