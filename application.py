@@ -49,8 +49,8 @@ colors = {
 
 app = dash.Dash(
     __name__,
-    server=application,
-    routes_pathname_prefix='/waterlogger/'
+    server=application
+   # routes_pathname_prefix='/waterlogger/'
 )
 
 
