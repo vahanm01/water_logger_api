@@ -39,13 +39,6 @@ def water_query_results(query, connection):
     return query_fetch
 
 
-def water_pgres(user, password):
-    connection = psycopg2.connect(user = user,
-                                  password = password,
-                                  host = "water-logger.cmoec5ph6uhr.us-east-1.rds.amazonaws.com",
-                                  port = "5432",
-                                  database = "raw_logs")
-    return connection
 
 
 colors = {
@@ -69,7 +62,7 @@ def serve_layout():
     
     
     client =  paramiko.client.SSHClient()
-    hostname=hostname
+    hostname=pi_hostname
     port=22
     username=pi_user
     password=pi_pass
@@ -83,7 +76,7 @@ def serve_layout():
     sftp_client = client.open_sftp()
     
     localFilePath='./detector_output.json'
-    sftp_client.get('/home/pi/water_logger/detector_output.json', localFilePath)
+    sftp_client.get(file, localFilePath)
         
     sftp_client.close() 
     
