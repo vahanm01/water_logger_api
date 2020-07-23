@@ -17,7 +17,7 @@ pi_pass = os.environ.get('pi_pass')
 pgres_user = os.getenv('pgres_user')
 pgres_pass = os.environ.get('pgres_pass')
 
-pi_hostname = os.environ.get('hostname')
+pi_hostname = os.environ.get('pi_hostname')
 pgres_hostname = os.environ.get('pgres_hostname')
 file = os.environ.get('file')
 
