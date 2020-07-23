@@ -9,8 +9,17 @@ import dash_html_components as html
 import dash_core_components as dcc
 import paramiko
 import json
+import os
 
+pi_user = os.getenv('pi_user')
+pi_pass = os.environ.get('pi_pass')
 
+pgres_user = os.getenv('pgres_user')
+pgres_pass = os.environ.get('pgres_pass')
+
+pi_hostname = os.environ.get('hostname')
+pgres_hostname = os.environ.get('pgres_hostname')
+file = os.environ.get('file')
 
 application = Flask(__name__)
 
@@ -60,10 +69,10 @@ def serve_layout():
     
     
     client =  paramiko.client.SSHClient()
-    hostname='98.210.69.250'
+    hostname=hostname
     port=22
-    username='pi'
-    password='Felicia2020#'
+    username=pi_user
+    password=pi_pass
     
     
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy()) 
@@ -84,9 +93,9 @@ def serve_layout():
   
     flow_eval=str(flow_data['flow'])
     
-    connection = psycopg2.connect(user = "beef",
-                                  password = "Felicia2020#",
-                                  host = "water-logger.cmoec5ph6uhr.us-east-1.rds.amazonaws.com",
+    connection = psycopg2.connect(user = pgres_user,
+                                  password = pgres_pass,
+                                  host = pgres_hostname,
                                   port = "5432",
                                   database = "raw_logs")
 
@@ -103,7 +112,7 @@ def serve_layout():
     
     
     timeline_graph = html.Div(style={'backgroundColor': colors['background']}, children=[
-        html.H1(children='Beef-Cheese Ranch', 
+        html.H1(children='Hydrecon', 
             style={
             'textAlign': 'left',
             'color': colors['text']}),
