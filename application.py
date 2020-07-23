@@ -76,7 +76,7 @@ def serve_layout():
     sftp_client = client.open_sftp()
     
     localFilePath='./detector_output.json'
-    sftp_client.get(file, localFilePath)
+    sftp_client.get('/home/pi/water_logger/detector_output.json', localFilePath)
         
     sftp_client.close() 
     
