@@ -68,8 +68,8 @@ app = dash.Dash(
    # routes_pathname_prefix='/waterlogger/'
 )
 
-image_filename = 'hydrecon_stack.png'
-encoded_image = base64.b64encode(open(image_filename, 'rb').read())
+#image_filename = 'hydrecon_stack.png'
+#encoded_image = base64.b64encode(open(image_filename, 'rb').read())
 
 def serve_layout():
 
