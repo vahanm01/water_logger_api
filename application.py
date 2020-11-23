@@ -26,7 +26,7 @@ pi_user='pi'
 pi_pass='Felicia2020#'
 pgres_user='beef'
 pgres_pass='Felicia2020#'
-pi_hostname='192.168.0.88'
+pi_hostname='98.210.69.250'
 pgres_hostname='water-logger.cmoec5ph6uhr.us-east-1.rds.amazonaws.com'
 
 
