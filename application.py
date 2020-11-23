@@ -7,19 +7,32 @@ import numpy as np
 import dash
 import dash_html_components as html
 import dash_core_components as dcc
+import dash_table
 import paramiko
 import json
 import os
+import base64
+# =============================================================================
+# pi_user = os.getenv('pi_user')
+# pi_pass = os.environ.get('pi_pass')
+# pgres_user = os.getenv('pgres_user')
+# pgres_pass = os.environ.get('pgres_pass')
+# pi_hostname = os.environ.get('pi_hostname')
+# pgres_hostname = os.environ.get('pgres_hostname')
+# file = os.environ.get('file')
+# =============================================================================
 
-pi_user = os.getenv('pi_user')
-pi_pass = os.environ.get('pi_pass')
+pi_user='pi'
+pi_pass='Felicia2020#'
+pgres_user='beef'
+pgres_pass='Felicia2020#'
+pi_hostname='192.168.0.88'
+pgres_hostname='water-logger.cmoec5ph6uhr.us-east-1.rds.amazonaws.com'
 
-pgres_user = os.getenv('pgres_user')
-pgres_pass = os.environ.get('pgres_pass')
 
-pi_hostname = os.environ.get('pi_hostname')
-pgres_hostname = os.environ.get('pgres_hostname')
-file = os.environ.get('file')
+
+
+
 
 application = Flask(__name__)
 
@@ -55,6 +68,8 @@ app = dash.Dash(
    # routes_pathname_prefix='/waterlogger/'
 )
 
+image_filename = 'hydrecon_stack.png'
+encoded_image = base64.b64encode(open(image_filename, 'rb').read())
 
 def serve_layout():
 
@@ -95,8 +110,13 @@ def serve_layout():
     init_df=water_query_results(f"select* from pulse_detection order by record_date asc", connection)
     init_df["gallons"]=float(0)
     
+    m_recent_df=init_df[init_df.record_date==max(init_df.record_date)]
+    last_log=str(max(m_recent_df.record_date))
+    last_gallon=str(max(m_recent_df.total_pulses/26.7))
     
-    #1800 based on average tested values in 2018
+    
+    
+    #1800 based on average tested values in 2018, hall effect. 
     #new pulse detection is 13.3 pulses per gallon. We double because there are to reed switches at halfway.
     init_df.gallons=init_df.total_pulses/26.7
     total_gallons=round(sum(init_df.gallons))
@@ -104,31 +124,48 @@ def serve_layout():
     
     
     
-    timeline_graph = html.Div(style={'backgroundColor': colors['background']}, children=[
+    timeline_graph = html.Div( children=[
         html.H1(children='Hydrecon', 
             style={
             'textAlign': 'left',
-            'color': colors['text']}),
-    
-        html.Div(children=f'Total gallons to date: {total_gallons}',            
-            style={
-            'textAlign': 'left',
-            'color': colors['text']}),
+            'font-family': 'Tahoma',
+            'color': 'rgb(0, 128, 255)'}),
         
-        html.Div(children=f'Flow: {flow_eval}',            
-            style={
-            'textAlign': 'left',
-            'color': colors['text']}),        
-        
+       # html.Button('Stack', id='submit-val', n_clicks=0),
+
         dcc.Graph(id='example-graph',
               figure={'data': [{'x': init_df.record_date, 'y': init_df.gallons, 'type': 'line', 'name': 'Gallons'}],
-                      'layout': {'title': 'Gallons by Date'}})
+                      'layout': {'title': 'Gallons'}}),
+        
+        html.H3(children=f'Total gallons to date: {total_gallons}',            
+            style={
+            'textAlign': 'right',
+            'color': 'rgb(0, 0, 0)'}),
+        
+        html.H4(children=f'Flow rate: {flow_eval}',            
+            style={
+            'textAlign': 'right',
+            'color': 'rgb(0, 0, 0)'}),
+        
+        html.H4(children=f'Last_log: {last_log} | {last_gallon} gallon(s)',            
+            style={
+            'textAlign': 'right',
+            'color': 'rgb(0, 0, 0)'})        
+        
+# =============================================================================
+#         html.Img(src='data:image/png;base64,{}'.format(encoded_image.decode()),
+#                  style={
+#                         'style':"vertical-align:middle"}),
+# =============================================================================
+        
+
         
         ])
+    
         
     return timeline_graph
     
-  
+
 
 
 app.layout = serve_layout
@@ -138,5 +175,5 @@ if __name__ == "__main__":
 
     
     
-    #application.debug = True
+    application.debug = True
     application.run()
