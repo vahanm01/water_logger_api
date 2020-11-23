@@ -171,9 +171,9 @@ def serve_layout():
 app.layout = serve_layout
 
 # run the app.
-#if __name__ == "__main__":
+if __name__ == "__main__":
 
     
     
-    #application.debug = True
-    #application.run()
+    application.debug = True
+    application.run()
