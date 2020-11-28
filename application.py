@@ -61,7 +61,7 @@ def serve_layout():
             style={
             'textAlign': 'left',
             'font-family': 'Tahoma',
-            'color': 'rgb(0, 128, 255)'}),
+            'color': 'rgb(9, 16, 87)'}),
         
         dcc.Graph(id='example-graph',
               figure={'data': [{'x': graph_df.record_date, 'y': graph_df.gallons, 'type': 'bar', 'name': 'Gallons'}],
