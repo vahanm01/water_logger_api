@@ -7,18 +7,10 @@ import datetime
 import dash_table
 from helpers import* 
 
-# =============================================================================
-# pi_pass = os.environ.get('pi_pass')
-# pgres_pass = os.environ.get('pgres_pass')
-# pi_hostname = os.environ.get('pi_hostname')
-# 
-# =============================================================================
-pi_pass='Felicia2020#'
-pgres_pass='Felicia2020#'
-pi_hostname='192.168.0.88'
 
-
-
+pi_pass = os.environ.get('pi_pass')
+pgres_pass = os.environ.get('pgres_pass')
+pi_hostname = os.environ.get('pi_hostname')
 
 application = Flask(__name__)
 
