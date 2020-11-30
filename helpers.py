@@ -48,6 +48,9 @@ def ssh_file(pi_hostname, pi_pass):
     client.connect(hostname=pi_hostname, port=22, username='pi', password=pi_pass)
     sftp_client = client.open_sftp()
     
+    stdin, stdout, stderr = client.exec_command(' pgrep -f -u pi pulse_counter.py')
+    pulse_live=stdout.read().decode("utf-8").strip('\n')
+    
     localFilePath='./detector_output.json'
     sftp_client.get('/home/pi/water_logger/detector_output.json', localFilePath)
         
@@ -56,4 +59,4 @@ def ssh_file(pi_hostname, pi_pass):
     with open(localFilePath) as detector_output:
       flow_data = json.load(detector_output)
       
-    return flow_data
+    return flow_data, pulse_live

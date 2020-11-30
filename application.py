@@ -7,9 +7,18 @@ import datetime
 import dash_table
 from helpers import* 
 
-pi_pass = os.environ.get('pi_pass')
-pgres_pass = os.environ.get('pgres_pass')
-pi_hostname = os.environ.get('pi_hostname')
+# =============================================================================
+# pi_pass = os.environ.get('pi_pass')
+# pgres_pass = os.environ.get('pgres_pass')
+# pi_hostname = os.environ.get('pi_hostname')
+# 
+# =============================================================================
+pi_pass='Felicia2020#'
+pgres_pass='Felicia2020#'
+pi_hostname='192.168.0.88'
+
+
+
 
 application = Flask(__name__)
 
@@ -26,7 +35,15 @@ app = dash.Dash(
 def serve_layout():
     
     flow_data=ssh_file(pi_hostname, pi_pass)
-    flow_eval=str(flow_data['flow'])
+    flow_eval_dict=flow_data[0]
+    flow_eval=str(flow_eval_dict['flow'])
+    
+    
+    if len(flow_data[0]) > 0:
+        pulse_live='Live'
+        
+    else:
+        pulse_live='Down'
     
     connection=pgres_com('beef', pgres_pass)
     init_df=pgres_query(f"select* from pulse_detection order by record_date asc", connection).data_frame
@@ -34,7 +51,7 @@ def serve_layout():
     init_df["gallons"]=float(0)
     m_recent_df=init_df[init_df.record_date==max(init_df.record_date)]
     
-    active_log = datetime.datetime.strptime(flow_data['timestamp'], '%Y-%m-%d %H:%M:%S.%f')
+    active_log = datetime.datetime.strptime(flow_eval_dict['timestamp'], '%Y-%m-%d %H:%M:%S.%f')
     active_log = active_log.strftime("%Y %b %d %H:%M")
     
     last_gallon=str(round(max(m_recent_df.total_pulses/26.7)))
@@ -53,8 +70,12 @@ def serve_layout():
     del graph_df['total_pulses']
     graph_df=graph_df[['record_date', 'gallons']]
     
-    info_df={'LTD Gallons':str(total_gallons), 'Average Gallons /Day': str(agd), 'Active':flow_eval, 'Active log':active_log}
-    info_df=pd.DataFrame(info_df.items(), columns=['info_cell', 'value'])
+    info_df={'LTD Gallons':str(total_gallons), 
+             'Average Gallons /Day': str(agd), 
+             'Active':flow_eval, 
+             'Active log':active_log,
+             'RPi Pulse Counter': pulse_live}
+    info_df=pd.DataFrame(info_df.items(), columns=['system', 'value'])
 
     timeline_graph = html.Div( children=[
         html.H1(children='Hydrecon', 
