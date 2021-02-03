@@ -6,13 +6,17 @@ import os
 import datetime
 import dash_table
 from helpers import* 
-
+import base64
 
 pi_pass = os.environ.get('pi_pass')
 pgres_pass = os.environ.get('pgres_pass')
 pi_hostname = os.environ.get('pi_hostname')
 
 application = Flask(__name__)
+
+image_filename = 'hydreconstack.png' # replace with your own image
+encoded_image = base64.b64encode(open(image_filename, 'rb').read())
+
 
 colors = {
     'background': '#111111',
@@ -68,18 +72,26 @@ def serve_layout():
              'Active log':active_log,
              'RPi Pulse Counter': pulse_live}
     info_df=pd.DataFrame(info_df.items(), columns=['system', 'value'])
+    
 
-    timeline_graph = html.Div( children=[
+                              
+    timeline_graph = html.Div(children=[
         html.H1(children='Hydrecon', 
             style={
             'textAlign': 'left',
             'font-family': 'Tahoma',
             'color': 'rgb(9, 16, 87)'}),
         
+        html.Img(src='data:image/png;base64,{}'.format(encoded_image.decode()), 
+         style={"float":"right", "right" :"150px", "position": "relative"}),
+        
         dcc.Graph(id='example-graph',
               figure={'data': [{'x': graph_df.record_date, 'y': graph_df.gallons, 'type': 'bar', 'name': 'Gallons'}],
                       'layout': {'title': 'Gallons', 'height': 400, 'width': 1000}}),
         
+   
+         
+         
         dash_table.DataTable(
             id='info_table',
             columns=[{"name": i, "id": i} for i in info_df.columns],
@@ -93,8 +105,13 @@ def serve_layout():
                 'fontWeight': 'bold',
                 'color': 'white'}
             ),   
+
         
         html.H4(children=''),
+        
+         
+        
+
         
         dash_table.DataTable(
             id='table',
@@ -108,7 +125,9 @@ def serve_layout():
                 'backgroundColor': 'gray',
                 'fontWeight': 'bold'}    
                 
-            )     
+            )
+
+        
         ])
 
     return timeline_graph
