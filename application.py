@@ -12,6 +12,7 @@ pi_pass = os.environ.get('pi_pass')
 pgres_pass = os.environ.get('pgres_pass')
 pi_hostname = os.environ.get('pi_hostname')
 
+
 application = Flask(__name__)
 
 image_filename = 'hydreconstack.png' # replace with your own image
@@ -82,15 +83,16 @@ def serve_layout():
             'font-family': 'Tahoma',
             'color': 'rgb(9, 16, 87)'}),
         
-        html.Img(src='data:image/png;base64,{}'.format(encoded_image.decode()), 
+         html.Img(src='data:image/png;base64,{}'.format(encoded_image.decode()), 
          style={"float":"right", "right" :"150px", "position": "relative"}),
         
         dcc.Graph(id='example-graph',
               figure={'data': [{'x': graph_df.record_date, 'y': graph_df.gallons, 'type': 'bar', 'name': 'Gallons'}],
-                      'layout': {'title': 'Gallons', 'height': 400, 'width': 1000}}),
+                      'layout': {'title': 'Gallons', 'height': 400, 'width': 675}}),
         
    
          
+
          
         dash_table.DataTable(
             id='info_table',
