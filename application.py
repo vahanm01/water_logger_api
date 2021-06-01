@@ -8,12 +8,15 @@ import dash_table
 from helpers import* 
 import base64
 
-pi_pass = os.environ.get('pi_pass')
-pgres_pass = os.environ.get('pgres_pass')
-pi_hostname = os.environ.get('pi_hostname')
+# =============================================================================
+# pi_pass = os.environ.get('pi_pass')
+# pgres_pass = os.environ.get('pgres_pass')
+# pi_hostname = os.environ.get('pi_hostname')
+# =============================================================================
 
-
-
+pi_pass='Felicia2020#'
+pgres_pass='Felicia2020#'
+pi_hostname='192.168.0.88'
 
 application = Flask(__name__)
 
@@ -38,8 +41,7 @@ def serve_layout():
     flow_eval=str(flow_eval_dict['flow'])
         
     
-    pulse_live=flow_data[0]
-    pulse_live=str(pulse_live['timestamp'])
+
     
     
     connection=pgres_com('beef', pgres_pass)
@@ -52,6 +54,11 @@ def serve_layout():
     active_log = active_log.strftime("%Y %b %d %H:%M")
     
     last_gallon=str(round(max(m_recent_df.total_pulses/26.7)))
+    
+
+    last_pulse=(str(max(m_recent_df.record_date)))
+    last_pulse = datetime.datetime.strptime(last_pulse, '%Y-%m-%d %H:%M:%S.%f') 
+    last_pulse = last_pulse.strftime("%Y %b %d %H:%M")
     
     #New pulse detection is 13.3 pulses per gallon. We double because there are to reed switches at halfway.
     init_df.gallons=round(init_df.total_pulses/26.7)
@@ -69,9 +76,9 @@ def serve_layout():
     
     info_df={'LTD Gallons':str(total_gallons), 
              'Average Gallons /Day': str(agd), 
-             'Active':flow_eval, 
-             'Active log':active_log,
-             'Last RPi Pulse Log': pulse_live}
+             'Detection Active':flow_eval, 
+             'SSH log':active_log,
+             'Last RPi Pulse Log': last_pulse}
     info_df=pd.DataFrame(info_df.items(), columns=['system', 'value'])
     
 
