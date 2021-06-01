@@ -36,13 +36,11 @@ def serve_layout():
     flow_data=ssh_file(pi_hostname, pi_pass)
     flow_eval_dict=flow_data[0]
     flow_eval=str(flow_eval_dict['flow'])
-    
-    
-    if len(flow_data[0]) > 0:
-        pulse_live='Live'
         
-    else:
-        pulse_live='Down'
+    
+    pulse_live=flow_data[0]
+    pulse_live=str(pulse_live['timestamp'])
+    
     
     connection=pgres_com('beef', pgres_pass)
     init_df=pgres_query(f"select* from pulse_detection order by record_date asc", connection).data_frame
@@ -73,7 +71,7 @@ def serve_layout():
              'Average Gallons /Day': str(agd), 
              'Active':flow_eval, 
              'Active log':active_log,
-             'RPi Pulse Counter': pulse_live}
+             'Last RPi Pulse Log': pulse_live}
     info_df=pd.DataFrame(info_df.items(), columns=['system', 'value'])
     
 
@@ -83,9 +81,7 @@ def serve_layout():
         html.Img(src='data:image/png;base64,{}'.format(encoded_image.decode()),
         width = "950",
         height = "325",         
-        style={"float":"right", 
-                "right" :"150px", 
-                "position": "relative"
+        style={"position": "relative"
                 
                 
             }),
