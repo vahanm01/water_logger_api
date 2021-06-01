@@ -26,7 +26,8 @@ colors = {
 
 app = dash.Dash(
     __name__,
-    server=application
+    server=application,
+    title='Hydrecon'
 )
 
 def serve_layout():
@@ -79,8 +80,6 @@ def serve_layout():
 
                               
     timeline_graph = html.Div(children=[
-       
-
        
         html.H1(children='Hydrecon', 
             style={
