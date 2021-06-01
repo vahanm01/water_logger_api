@@ -8,11 +8,15 @@ import dash_table
 from helpers import* 
 import base64
 
-pi_pass = os.environ.get('pi_pass')
-pgres_pass = os.environ.get('pgres_pass')
-pi_hostname = os.environ.get('pi_hostname')
+# =============================================================================
+# pi_pass = os.environ.get('pi_pass')
+# pgres_pass = os.environ.get('pgres_pass')
+# pi_hostname = os.environ.get('pi_hostname')
+# =============================================================================
 
-
+pi_pass='Felicia2020#'
+pgres_pass='Felicia2020#'
+pi_hostname='192.168.0.88'
 
 
 application = Flask(__name__)
@@ -79,6 +83,17 @@ def serve_layout():
 
                               
     timeline_graph = html.Div(children=[
+       
+        html.Img(src='data:image/png;base64,{}'.format(encoded_image.decode()),
+        width = "950",
+        height = "325",         
+        style={"float":"right", 
+                "right" :"150px", 
+                "position": "relative"
+                
+                
+            }),
+       
         html.H1(children='Hydrecon', 
             style={
             'textAlign': 'left',
@@ -87,15 +102,7 @@ def serve_layout():
     
 
     
-         html.Img(src='data:image/png;base64,{}'.format(encoded_image.decode()),
-         width = "950",
-         height = "325",         
-         style={"float":"right", 
-                "right" :"150px", 
-                "position": "relative"
-                
-                
-                }),
+
         
         dcc.Graph(id='example-graph',
               figure={'data': [{'x': graph_df.record_date, 'y': graph_df.gallons, 'type': 'bar', 'name': 'Gallons'}],
