@@ -12,6 +12,9 @@ pi_pass = os.environ.get('pi_pass')
 pgres_pass = os.environ.get('pgres_pass')
 pi_hostname = os.environ.get('pi_hostname')
 
+
+
+
 application = Flask(__name__)
 
 image_filename = 'hydreconstack.png' # replace with your own image
@@ -85,8 +88,8 @@ def serve_layout():
 
     
          html.Img(src='data:image/png;base64,{}'.format(encoded_image.decode()),
-         width = "auto",
-         height = "auto",         
+         width = "950",
+         height = "325",         
          style={"float":"right", 
                 "right" :"150px", 
                 "position": "relative"
