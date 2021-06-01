@@ -78,13 +78,7 @@ def serve_layout():
                               
     timeline_graph = html.Div(children=[
        
-        html.Img(src='data:image/png;base64,{}'.format(encoded_image.decode()),
-        width = "950",
-        height = "325",         
-        style={"position": "relative"
-                
-                
-            }),
+
        
         html.H1(children='Hydrecon', 
             style={
@@ -92,13 +86,24 @@ def serve_layout():
             'font-family': 'Tahoma',
             'color': 'rgb(9, 16, 87)'}),
     
-
+        html.Img(src='data:image/png;base64,{}'.format(encoded_image.decode()),
+        width = "750",
+        height = "225",         
+        style={"position": "relative"
+                
+                
+            }),
     
 
         
         dcc.Graph(id='example-graph',
               figure={'data': [{'x': graph_df.record_date, 'y': graph_df.gallons, 'type': 'bar', 'name': 'Gallons'}],
-                      'layout': {'title': 'Gallons', 'height': 400, 'width': 675}}),
+                      'layout': {'title': 'Gallons', 'height': 400, 'width': 675}},
+              config={
+                    'displayModeBar': False,
+                    'displaylogo': False,                                       
+                    'modeBarButtonsToRemove': ['zoom2d', 'hoverCompareCartesian', 'hoverClosestCartesian', 'toggleSpikelines'] 
+                    }),
         
    
          
