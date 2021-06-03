@@ -76,7 +76,7 @@ def serve_layout():
     info_df={'LTD Gallons':str(total_gallons), 
              'Average Gallons /Day': str(agd), 
              'Server':server,
-             'Detection Active':flow_eval, 
+             'Current Water Flow':flow_eval, 
              'SSH Log':active_log,
              'Last RPi Pulse Log': last_pulse}
     info_df=pd.DataFrame(info_df.items(), columns=['system', 'value'])
