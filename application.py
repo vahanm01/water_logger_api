@@ -12,7 +12,6 @@ pi_pass = os.environ.get('pi_pass')
 pgres_pass = os.environ.get('pgres_pass')
 pi_hostname = os.environ.get('pi_hostname')
 
-
 application = Flask(__name__)
 
 image_filename = 'hydreconstack.png' # replace with your own image
@@ -27,7 +26,7 @@ colors = {
 app = dash.Dash(
     __name__,
     server=application,
-    title='Hydrecon'
+    title='HYDRECON'
 )
 
 def serve_layout():
@@ -41,7 +40,6 @@ def serve_layout():
     else:
         server="Down"
 
-    
     
     connection=pgres_com('beef', pgres_pass)
     init_df=pgres_query(f"select* from pulse_detection order by record_date asc", connection).data_frame
@@ -59,7 +57,7 @@ def serve_layout():
     last_pulse = datetime.datetime.strptime(last_pulse, '%Y-%m-%d %H:%M:%S.%f') 
     last_pulse = last_pulse.strftime("%Y %b %d %H:%M")
     
-    #New pulse detection is 13.3 pulses per gallon. We double because there are to reed switches at halfway.
+    #New pulse detection is 13.33 pulses per gallon. We double because there are two reed switches each at halfway.
     init_df.gallons=round(init_df.total_pulses/26.7)
     total_gallons=round(sum(init_df.gallons))
     
@@ -85,7 +83,7 @@ def serve_layout():
                               
     timeline_graph = html.Div(children=[
        
-        html.H1(children='Hydrecon', 
+        html.H1(children='HYDRECON', 
             style={
             'textAlign': 'left',
             'font-family': 'Tahoma',
