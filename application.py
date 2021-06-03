@@ -36,7 +36,10 @@ def serve_layout():
     flow_eval_dict=flow_data[0]
     flow_eval=str(flow_eval_dict['flow'])
         
-    
+    if flow_data[1]:
+        server="Up"
+    else:
+        server="Down"
 
     
     
@@ -72,6 +75,7 @@ def serve_layout():
     
     info_df={'LTD Gallons':str(total_gallons), 
              'Average Gallons /Day': str(agd), 
+             'Server':server,
              'Detection Active':flow_eval, 
              'SSH Log':active_log,
              'Last RPi Pulse Log': last_pulse}

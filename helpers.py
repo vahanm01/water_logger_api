@@ -48,7 +48,7 @@ def ssh_file(pi_hostname, pi_pass):
     client.connect(hostname=pi_hostname, port=22, username='pi', password=pi_pass)
     sftp_client = client.open_sftp()
     
-    stdin, stdout, stderr = client.exec_command(' pgrep -f -u pi pulse_counter.py')
+    stdin, stdout, stderr = client.exec_command('pgrep -f -u pi pulse_counter.py')
     pulse_live=stdout.read().decode("utf-8").strip('\n')
     
     localFilePath='./detector_output.json'
