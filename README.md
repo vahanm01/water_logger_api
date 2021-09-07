@@ -50,7 +50,7 @@ Within the project directory, run the following commands to create an EB environ
 
 
 ```bash
-eb init -p python-3.6 remote-water-measure --region us-east-1
+eb init -p python-3.8 remote-water-measure --region us-east-1
 eb create remote-water-measure
 ```
 
