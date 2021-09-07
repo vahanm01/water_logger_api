@@ -87,7 +87,7 @@ eb logs -a
 
 For the EB environment to properly function via HTTPS, we need to request a new SSL cert and upload to AWS Certificate Manager.
 
-IT will need to point our DNS to the EC2 load balancer address of our EB environment:
+Point DNS to the EC2 load balancer address of EB environment:
 **hydrecon.com IN CNAME <key from Cert Manager>**
 
 Lastly we add a listener to the load balancer where we terminate HTTP and allow secure connection:
