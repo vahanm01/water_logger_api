@@ -1,4 +1,4 @@
-# Hydrecon (https://hydrecon.com/)
+# Hydrecon (https://hydrecon.com/)  CURRENTLY DOWN. Code for demonstration purposes. 
 
 Hydrecon is a RPi powered home water monitoring system. 
 It is capable of real-time water tracking, as well as recording usage to an external DB.
